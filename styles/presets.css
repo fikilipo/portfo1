@@ -1,0 +1,418 @@
+/* -------------------------------------------------------------
+ * Сетка и Ритм — стили трёх пресетов контента
+ * Все размеры выражены через --grid-base / --section-gap, чтобы
+ * можно было наблюдать ритм‑нарушения в реальном времени.
+ * ------------------------------------------------------------- */
+
+/* ---- общие токены пресетов ---- */
+.stage__canvas {
+  --gap-xs: calc(var(--grid-base) * 1);   /* 8  */
+  --gap-s: calc(var(--grid-base) * 2);    /* 16 */
+  --gap-m: calc(var(--grid-base) * 3);    /* 24 */
+  --gap-l: calc(var(--grid-base) * 4);    /* 32 */
+  --gap-xl: calc(var(--grid-base) * 6);   /* 48 */
+  --radius: calc(var(--grid-base) * 1.5);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: var(--line-height);
+}
+
+.stage__canvas *:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.stage__canvas h1,
+.stage__canvas h2 {
+  font-size: var(--heading-size);
+  line-height: var(--line-height);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.stage__canvas p {
+  line-height: var(--line-height);
+}
+
+.eye-target {
+  cursor: pointer;
+}
+
+.eye-target:hover {
+  outline: 1px dashed var(--line-2);
+  outline-offset: 4px;
+}
+
+/* Режим «До»: правая половина сцены показывает хаотичную вёрстку.
+   Мы накладываем clip-path; содержимое то же самое, просто
+   пересчитанное с `chaotic` класс. */
+.stage__canvas--chaotic {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--paper-2);
+  clip-path: inset(0 0 0 var(--compare-x, 50%));
+  pointer-events: none;
+}
+
+.stage__canvas--chaotic {
+  --heading-size: 28px;
+  --line-height: 1.1;
+  --section-gap: 12px;
+  --grid-base: 5px;
+}
+
+.stage__canvas--chaotic h1,
+.stage__canvas--chaotic h2 {
+  letter-spacing: 0;
+}
+
+.stage__canvas--chaotic > * {
+  margin-top: calc(7px + (17 * var(--rand, 0.5)) * 1px) !important;
+  padding: 9px 11px !important;
+}
+
+/* =================================================================
+ * ПРЕСЕТ: ЛЕНДИНГ
+ * ================================================================= */
+.preset-landing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+}
+
+.preset-landing__hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-m);
+  padding: var(--gap-xl) 0;
+}
+
+.preset-landing__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.preset-landing__eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--muted);
+}
+
+.preset-landing__sub {
+  font-size: calc(var(--heading-size) * 0.38 + 4px);
+  color: var(--muted);
+  max-width: 54ch;
+  margin: 0;
+}
+
+.preset-landing__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: calc(var(--grid-base) * 2) calc(var(--grid-base) * 3);
+  background: var(--ink);
+  color: var(--accent);
+  border-radius: calc(var(--grid-base) * 1.25);
+  font-weight: 600;
+  font-size: 14px;
+  width: fit-content;
+  text-decoration: none;
+  transition: transform 160ms ease;
+}
+
+.preset-landing__cta:hover {
+  transform: translateY(-1px);
+}
+
+.preset-landing__features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-l);
+}
+
+.feature-card {
+  padding: var(--gap-l);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-s);
+}
+
+.feature-card__icon {
+  width: calc(var(--grid-base) * 5);
+  height: calc(var(--grid-base) * 5);
+  border-radius: calc(var(--grid-base) * 1.25);
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+}
+
+.feature-card__icon svg {
+  width: 60%;
+  height: 60%;
+}
+
+.feature-card h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.feature-card p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.preset-landing__reviews {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-l);
+}
+
+.review-card {
+  padding: var(--gap-l);
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-s);
+}
+
+.review-card__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review-card__avatar {
+  width: calc(var(--grid-base) * 5);
+  height: calc(var(--grid-base) * 5);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #cfd7ea, #eef2fb);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 12px;
+  flex: none;
+}
+
+.review-card__name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.review-card__role {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.review-card p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* =================================================================
+ * ПРЕСЕТ: СТАТЬЯ
+ * ================================================================= */
+.preset-article {
+  max-width: 68ch;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-l);
+  padding: var(--gap-xl) 0;
+}
+
+.preset-article__meta {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.preset-article__lead {
+  font-size: calc(var(--heading-size) * 0.42);
+  color: var(--muted);
+  margin: 0;
+}
+
+.preset-article p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.preset-article figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preset-article figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.preset-article figcaption {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.preset-article blockquote {
+  margin: 0;
+  padding: var(--gap-m);
+  border-left: 3px solid var(--ink);
+  background: var(--paper);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: calc(var(--heading-size) * 0.38);
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+
+.preset-article blockquote cite {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  font-style: normal;
+  color: var(--muted);
+}
+
+.preset-article__tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.preset-article__tags span {
+  padding: 4px 10px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* =================================================================
+ * ПРЕСЕТ: КАРТОЧКА ТОВАРА
+ * ================================================================= */
+.preset-product {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--gap-xl);
+  padding: var(--gap-xl) 0;
+  align-items: start;
+}
+
+.preset-product__gallery {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  padding: var(--gap-m);
+}
+
+.preset-product__gallery svg {
+  width: 100%;
+  height: 100%;
+}
+
+.preset-product__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-m);
+}
+
+.preset-product__brand {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.preset-product__title {
+  font-size: calc(var(--heading-size) * 0.7);
+}
+
+.preset-product__price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.preset-product__price b {
+  font-size: calc(var(--heading-size) * 0.55);
+  font-weight: 700;
+}
+
+.preset-product__price del {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.preset-product__desc {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.preset-product__specs {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--gap-xs) var(--gap-m);
+  font-size: 13px;
+}
+
+.preset-product__specs dt {
+  color: var(--muted);
+}
+
+.preset-product__specs dd {
+  margin: 0;
+}
+
+.preset-product__buy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: calc(var(--grid-base) * 2) calc(var(--grid-base) * 3);
+  background: var(--ink);
+  color: var(--accent);
+  border-radius: calc(var(--grid-base) * 1.25);
+  font-weight: 600;
+  font-size: 14px;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .preset-landing__features,
+  .preset-landing__reviews {
+    grid-template-columns: 1fr;
+  }
+  .preset-product {
+    grid-template-columns: 1fr;
+  }
+}
