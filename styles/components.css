@@ -1,0 +1,330 @@
+/* -------------------------------------------------------------
+ * Сетка и Ритм — UI‑компоненты (кнопки, ползунки, бейджи, заметки)
+ * ------------------------------------------------------------- */
+
+/* ---- Кнопки ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--paper-2);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+
+.btn:hover {
+  background: var(--paper);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--accent);
+  border-color: var(--ink);
+}
+
+.btn--icon {
+  padding: 8px;
+}
+
+.btn--primary {
+  background: var(--ink);
+  color: var(--accent);
+  border-color: var(--ink);
+}
+
+/* ---- Сегментированный переключатель пресетов ---- */
+.segmented {
+  display: inline-flex;
+  padding: 4px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.segmented__btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.segmented__btn:hover {
+  color: var(--ink);
+}
+
+.segmented__btn.is-active {
+  background: var(--ink);
+  color: var(--accent);
+  box-shadow: var(--shadow-1);
+}
+
+/* ---- Радио‑ряд (базовый модуль) ---- */
+.radio-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.radio-row label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.radio-row label::after {
+  content: "px";
+  font-weight: 400;
+  color: var(--muted);
+  margin-left: 2px;
+  font-size: 11px;
+}
+
+.radio-row input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+
+.radio-row label:has(input:checked) {
+  background: var(--ink);
+  color: var(--accent);
+  border-color: var(--ink);
+}
+
+.radio-row label:has(input:checked)::after {
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+/* ---- Ползунки ---- */
+.slider {
+  margin: 10px 0 14px;
+}
+
+.slider__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.slider__head output {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.slider input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--line);
+  border-radius: 999px;
+  outline: none;
+}
+
+.slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 2px solid var(--paper-2);
+  cursor: pointer;
+  box-shadow: var(--shadow-1);
+  transition: transform 120ms ease;
+}
+
+.slider input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.08);
+}
+
+.slider input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 2px solid var(--paper-2);
+  cursor: pointer;
+}
+
+/* ---- Чекбоксы ---- */
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.check input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--line-2);
+  border-radius: 4px;
+  display: inline-grid;
+  place-content: center;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.check input:checked {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.check input:checked::after {
+  content: "";
+  width: 8px;
+  height: 4px;
+  border-left: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+
+/* ---- Селект ---- */
+select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--paper-2);
+  font-size: 13px;
+}
+
+/* ---- Индикатор ритма ---- */
+.rhythm__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--paper-2);
+  margin-bottom: 10px;
+}
+
+.rhythm__badge--green {
+  background: var(--ok);
+}
+.rhythm__badge--yellow {
+  background: var(--warn);
+  color: var(--ink);
+}
+.rhythm__badge--red {
+  background: var(--bad);
+}
+
+.rhythm__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+.rhythm__stats {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.rhythm__issues {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.rhythm__issues li {
+  font-size: 12px;
+  padding: 6px 10px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink-2);
+}
+
+.rhythm__issues li::before {
+  content: "• ";
+  color: var(--warn);
+  font-weight: 700;
+}
+
+/* ---- Заметка дизайнера ---- */
+.note {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.note h3 {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.note__empty {
+  margin: 0;
+  color: var(--muted);
+}
+
+.note__tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* ---- Подсказка «Легенда» ---- */
+.legend {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.legend summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ink);
+  padding: 4px 0;
+}
+
+.legend p {
+  margin: 8px 0 0;
+  line-height: 1.55;
+}

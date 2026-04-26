@@ -1,0 +1,101 @@
+/* -------------------------------------------------------------
+ * Сетка и Ритм — базовые токены, reset, типографика
+ * ------------------------------------------------------------- */
+
+:root {
+  /* Управляемые пользователем переменные (правятся из JS) */
+  --grid-base: 8px;
+  --heading-size: 48px;
+  --line-height: 1.5;
+  --section-gap: 64px;
+  --container-width: 960px;
+
+  /* Палитра (нейтральный бренд) */
+  --ink: #0d0f14;
+  --ink-2: #1c1f27;
+  --ink-3: #2a2e38;
+  --muted: #5a6072;
+  --line: #e3e6ed;
+  --line-2: #cbd0dc;
+  --paper: #f6f7fa;
+  --paper-2: #ffffff;
+  --accent: #e7f85a;
+  --accent-ink: #0d0f14;
+
+  /* Ритм‑индикатор */
+  --ok: #1fa673;
+  --warn: #f5a524;
+  --bad: #e5484d;
+
+  /* Слои */
+  --z-grid: 40;
+  --z-heatmap: 41;
+  --z-compare: 42;
+
+  /* Тени */
+  --shadow-1: 0 1px 2px rgba(15, 18, 25, 0.06), 0 4px 12px rgba(15, 18, 25, 0.06);
+  --shadow-2: 0 2px 6px rgba(15, 18, 25, 0.08), 0 14px 40px rgba(15, 18, 25, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* --------- reset --------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.4;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+/* Чтоб скрытие через [hidden] побеждало display */
+[hidden] {
+  display: none !important;
+}
+
+/* Видимый фокус */
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 6px;
+}

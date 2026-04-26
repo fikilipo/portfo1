@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Сетка и Ритм — интерактивный инструмент</title>
+    <meta
+      name="description"
+      content="Интерактивный инструмент, который показывает, как модульная сетка и типографический ритм влияют на восприятие контента."
+    />
+    <link rel="icon" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23111'/%3E%3Cpath d='M12 12h40v4H12zm0 12h40v4H12zm0 12h40v4H12zm0 12h40v4H12z' fill='%23e7f85a'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles/base.css" />
+    <link rel="stylesheet" href="./styles/layout.css" />
+    <link rel="stylesheet" href="./styles/components.css" />
+    <link rel="stylesheet" href="./styles/presets.css" />
+  </head>
+  <body data-preset="landing" data-grid-visible="true" data-heatmap-visible="false" data-compare="false" data-colorblind="none">
+    <!-- SVG‑фильтры дальтонизма + иконки sprite -->
+    <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+      <defs>
+        <filter id="protanopia"><feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0" /></filter>
+        <filter id="deuteranopia"><feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0" /></filter>
+        <filter id="tritanopia"><feColorMatrix type="matrix" values="0.95 0.05 0 0 0  0 0.433 0.567 0 0  0 0.475 0.525 0 0  0 0 0 1 0" /></filter>
+        <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 2s7 8 7 13a7 7 0 11-14 0c0-5 7-13 7-13z" fill="currentColor"/></symbol>
+        <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="18" r="1" fill="currentColor"/></symbol>
+        <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></g></symbol>
+        <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 7h4l2-2h4l2 2h4v12H4z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+        <symbol id="i-quote" viewBox="0 0 24 24"><path d="M7 7h5v5H8l-1 5H4l1-5V7zm9 0h5v5h-4l-1 5h-3l1-5V7z" fill="currentColor"/></symbol>
+        <symbol id="i-sound-on" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8a6 6 0 010 8M19 5a10 10 0 010 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+        <symbol id="i-sound-off" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9l6 6M22 9l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      </defs>
+    </svg>
+
+    <header class="topbar">
+      <div class="topbar__brand">
+        <span class="topbar__logo" aria-hidden="true"></span>
+        <div>
+          <h1>Сетка и&nbsp;Ритм</h1>
+          <p class="topbar__subtitle">Как модульная сетка влияет на&nbsp;восприятие</p>
+        </div>
+      </div>
+
+      <nav class="segmented" role="tablist" aria-label="Пресет контента">
+        <button class="segmented__btn is-active" role="tab" aria-selected="true" data-preset="landing">Лендинг</button>
+        <button class="segmented__btn" role="tab" aria-selected="false" data-preset="article">Статья</button>
+        <button class="segmented__btn" role="tab" aria-selected="false" data-preset="product">Карточка</button>
+      </nav>
+
+      <div class="topbar__actions">
+        <button class="btn" id="btn-compare" type="button" aria-pressed="false">До / После</button>
+        <button class="btn" id="btn-export" type="button">Сохранить PNG</button>
+        <button class="btn btn--icon" id="btn-sound" type="button" aria-pressed="false" aria-label="Звук ползунков">
+          <svg width="20" height="20"><use href="#i-sound-off"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <!-- ЛЕВАЯ ПАНЕЛЬ -->
+      <aside class="panel panel--left" aria-label="Параметры сетки">
+        <section class="panel__section">
+          <h2 class="panel__title">Базовый модуль</h2>
+          <div class="radio-row" role="radiogroup" aria-label="Базовый модуль сетки">
+            <label><input type="radio" name="grid-base" value="4" /><span>4</span></label>
+            <label><input type="radio" name="grid-base" value="6" /><span>6</span></label>
+            <label><input type="radio" name="grid-base" value="8" checked /><span>8</span></label>
+            <label><input type="radio" name="grid-base" value="12" /><span>12</span></label>
+          </div>
+        </section>
+
+        <section class="panel__section">
+          <h2 class="panel__title">Типографика и&nbsp;отступы</h2>
+
+          <div class="slider">
+            <div class="slider__head"><label for="s-heading">Размер заголовка</label><output id="s-heading-out">48 px</output></div>
+            <input type="range" id="s-heading" min="16" max="72" step="1" value="48" />
+          </div>
+
+          <div class="slider">
+            <div class="slider__head"><label for="s-line">Межстрочный интервал</label><output id="s-line-out">1.50</output></div>
+            <input type="range" id="s-line" min="1" max="2" step="0.05" value="1.5" />
+          </div>
+
+          <div class="slider">
+            <div class="slider__head"><label for="s-gap">Отступ секций</label><output id="s-gap-out">64 px</output></div>
+            <input type="range" id="s-gap" min="16" max="128" step="4" value="64" />
+          </div>
+
+          <div class="slider">
+            <div class="slider__head"><label for="s-width">Ширина контейнера</label><output id="s-width-out">960 px</output></div>
+            <input type="range" id="s-width" min="320" max="1200" step="8" value="960" />
+          </div>
+        </section>
+
+        <section class="panel__section">
+          <h2 class="panel__title">Слои</h2>
+          <label class="check"><input type="checkbox" id="l-grid" checked /><span>Сетка (колонки + baseline)</span></label>
+          <label class="check"><input type="checkbox" id="l-heatmap" /><span>Тепловая карта взгляда</span></label>
+          <label class="check"><input type="checkbox" id="l-snap" /><span>Привязка ползунков к&nbsp;сетке</span></label>
+        </section>
+
+        <section class="panel__section">
+          <h2 class="panel__title">Симуляция дальтонизма</h2>
+          <select id="colorblind" aria-label="Режим дальтонизма">
+            <option value="none">Нет</option>
+            <option value="protanopia">Протанопия (без красного)</option>
+            <option value="deuteranopia">Дейтеранопия (без зелёного)</option>
+            <option value="tritanopia">Тританопия (без синего)</option>
+          </select>
+        </section>
+
+        <section class="panel__section panel__section--muted">
+          <p class="hint">
+            Модульная сетка — это невидимый каркас. Когда все размеры и&nbsp;отступы кратны одному модулю, глаз читает страницу быстрее на&nbsp;20–30%.
+          </p>
+        </section>
+      </aside>
+
+      <!-- ЦЕНТРАЛЬНАЯ СЦЕНА -->
+      <section class="stage" aria-label="Сцена с пресетом">
+        <div class="stage__frame" id="stage-frame">
+          <div class="stage__container" id="stage-container">
+            <div class="stage__canvas" id="preset-root"></div>
+            <svg class="stage__grid" id="grid-overlay" aria-hidden="true"></svg>
+            <canvas class="stage__heatmap" id="heatmap" aria-hidden="true"></canvas>
+            <div class="stage__compare" id="compare-handle" hidden>
+              <div class="stage__compare-handle"><span>До</span><em>После</em></div>
+            </div>
+          </div>
+          <div class="stage__meta">
+            <span id="meta-grid">8 px · 12 колонок</span>
+            <span id="meta-width">960 px</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ПРАВАЯ ПАНЕЛЬ -->
+      <aside class="panel panel--right" aria-label="Индикатор ритма и заметки">
+        <section class="panel__section">
+          <h2 class="panel__title">Ритм</h2>
+          <div class="rhythm" id="rhythm">
+            <div class="rhythm__badge rhythm__badge--green" id="rhythm-badge">
+              <span class="rhythm__dot"></span>
+              <strong id="rhythm-label">Ритм соблюдён</strong>
+            </div>
+            <p class="rhythm__stats" id="rhythm-stats">100% значений кратны модулю 8 px.</p>
+            <ul class="rhythm__issues" id="rhythm-issues"></ul>
+          </div>
+        </section>
+
+        <section class="panel__section">
+          <h2 class="panel__title">Заметка дизайнера</h2>
+          <div class="note" id="note">
+            <p class="note__empty">Кликните по&nbsp;элементу на&nbsp;сцене, чтобы увидеть, почему он&nbsp;свёрстан именно так.</p>
+          </div>
+        </section>
+
+        <section class="panel__section panel__section--muted">
+          <details class="legend">
+            <summary>Легенда тепловой карты</summary>
+            <p>Красный — зона, куда взгляд падает первой. Жёлтый — вторичное внимание. Синий — зоны, которые пользователь, скорее всего, пропустит. Карта строится по&nbsp;F‑паттерну и&nbsp;весам элементов (заголовок&nbsp;= 1.0, CTA&nbsp;= 0.95, изображение&nbsp;= 0.9…).</p>
+          </details>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span>Проект «Сетка и&nbsp;Ритм»</span>
+      <span class="footer__sep">·</span>
+      <span>Vanilla HTML / CSS / JS</span>
+      <span class="footer__sep">·</span>
+      <a href="./TZ.md">ТЗ</a>
+    </footer>
+
+    <!-- html2canvas подгружается лениво при первом клике на «Сохранить PNG» -->
+    <script type="module" src="./scripts/main.js"></script>
+  </body>
+</html>
