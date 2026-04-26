@@ -1,5 +1,3 @@
-// Точка входа. Связывает DOM и state, вешает слушатели.
-
 import { getState, setState, subscribe } from "./state.js";
 import { renderPreset } from "./presets.js";
 import { drawGrid } from "./grid-overlay.js";
@@ -9,7 +7,6 @@ import { mountCompare } from "./compare.js";
 import { exportPng } from "./export.js";
 import * as Sound from "./sound.js";
 
-/* -------- DOM refs -------- */
 const body = document.body;
 const stageFrame = document.getElementById("stage-frame");
 const stageContainer = document.getElementById("stage-container");
@@ -29,7 +26,6 @@ const noteBox = document.getElementById("note");
 const metaGrid = document.getElementById("meta-grid");
 const metaWidth = document.getElementById("meta-width");
 
-/* -------- UI refs -------- */
 const segButtons = document.querySelectorAll(".segmented__btn");
 const gridBaseRadios = document.querySelectorAll('input[name="grid-base"]');
 const sHeading = document.getElementById("s-heading");
@@ -48,7 +44,6 @@ const btnCompare = document.getElementById("btn-compare");
 const btnExport = document.getElementById("btn-export");
 const btnSound = document.getElementById("btn-sound");
 
-/* -------- вспомогалки -------- */
 function snap(value, base, step = 1) {
   const snapped = Math.round(value / base) * base;
   return Math.max(step, snapped);
@@ -90,9 +85,7 @@ function scheduleOverlays() {
 function rerenderPreset(state) {
   presetRoot.innerHTML = "";
   presetRoot.appendChild(renderPreset(state.preset));
-  // Если активен режим сравнения — пересоздаём хаотичный слой
   mountCompare(stageContainer, presetRoot.firstChild, compareHandle, state.compare);
-  // Даём layout посчитаться, потом перерисовываем overlays
   scheduleOverlays();
 }
 
@@ -108,7 +101,6 @@ function updateOutputs(state) {
   sWidthOut.textContent = `${state.containerWidth} px`;
 }
 
-/* -------- UI → state -------- */
 segButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
     segButtons.forEach((b) => {
@@ -167,7 +159,6 @@ btnSound.addEventListener("click", () => {
   if (next) Sound.click();
 });
 
-/* -------- заметки дизайнера -------- */
 let highlightEl = null;
 
 function showNote(target) {
@@ -184,9 +175,7 @@ function showNote(target) {
     const p = document.createElement("p");
     p.textContent = parsed.body;
     noteBox.append(tag, h, p);
-  } catch (e) {
-    /* ignore */
-  }
+  } catch (e) {}
   highlight(target);
 }
 
@@ -225,7 +214,6 @@ document.addEventListener("click", (e) => {
   }
 });
 
-/* -------- state → UI/render -------- */
 subscribe((state) => {
   applyCssVars(state);
   syncBodyFlags(state);
@@ -234,16 +222,13 @@ subscribe((state) => {
   rerenderRhythm(state);
 });
 
-/* «Перерисовываем пресет при смене preset» — через отдельную подписку */
 let currentPreset = null;
 subscribe((state) => {
   if (state.preset !== currentPreset) {
     currentPreset = state.preset;
     rerenderPreset(state);
   } else {
-    // просто пересчитать overlays (размеры элементов могли поменяться)
     scheduleOverlays();
-    // И если включён режим сравнения — пересоздать хаотичный слой
     if (state.compare && !stageContainer.querySelector(".stage__canvas--chaotic")) {
       mountCompare(stageContainer, presetRoot.firstChild, compareHandle, true);
     }
@@ -253,8 +238,6 @@ subscribe((state) => {
   }
 });
 
-/* -------- начальная инициализация -------- */
-// Синхронизируем значения контролов со стартовым state
 (function init() {
   const s = getState();
   [...gridBaseRadios].forEach((r) => (r.checked = parseInt(r.value, 10) === s.gridBase));
@@ -267,9 +250,7 @@ subscribe((state) => {
   selCB.value = s.colorblind;
 })();
 
-/* -------- пересчёт overlays при resize -------- */
 window.addEventListener("resize", scheduleOverlays);
-// ResizeObserver, если доступен (на случай, если меняется высота сцены без resize)
 if (window.ResizeObserver) {
   const ro = new ResizeObserver(() => scheduleOverlays());
   ro.observe(stageContainer);

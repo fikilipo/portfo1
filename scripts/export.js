@@ -1,5 +1,3 @@
-// Экспорт сцены в PNG. html2canvas подгружаем лениво с CDN.
-
 const CDN = "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
 
 async function ensureLib() {
@@ -30,7 +28,7 @@ export async function exportPng(target, filename = "grid-rhythm.png") {
     a.click();
     a.remove();
   } catch (err) {
-    console.error("[export] html2canvas failed", err);
-    alert("Не удалось экспортировать PNG (нет сети для загрузки html2canvas).");
+    console.error(err);
+    alert("Не удалось экспортировать PNG.");
   }
 }

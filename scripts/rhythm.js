@@ -1,10 +1,3 @@
-// Проверка ритма: доля значений, кратных базовому модулю.
-// Экспортируем чистую функцию (чтобы её можно было тестировать)
-// и функцию рендера бейджа.
-
-/** @typedef {{ gridBase:number, headingSize:number, lineHeight:number, sectionGap:number, containerWidth:number }} RhythmInput */
-
-/** @param {RhythmInput} params */
 export function analyze(params) {
   const { gridBase, headingSize, lineHeight, sectionGap, containerWidth } = params;
 
@@ -12,9 +5,7 @@ export function analyze(params) {
     { name: "Размер заголовка", value: headingSize, unit: "px" },
     { name: "Отступ секций", value: sectionGap, unit: "px" },
     { name: "Ширина контейнера", value: containerWidth, unit: "px" },
-    // межстрочный интервал * размер заголовка = высота строки в px
     { name: "Высота строки H1", value: Math.round(headingSize * lineHeight), unit: "px" },
-    // типичные вложенные отступы пресетов (--gap-s/m/l)
     { name: "Внутренний отступ 2×модуль", value: gridBase * 2, unit: "px" },
     { name: "Внутренний отступ 3×модуль", value: gridBase * 3, unit: "px" },
   ];
@@ -52,7 +43,6 @@ export function analyze(params) {
     label = "Ритм нарушен";
   }
 
-  // Отдельная проверка: baseline (line-height × heading) кратен модулю
   const baselineOk = Math.round(headingSize * lineHeight) % gridBase === 0;
   if (!baselineOk) {
     issues.push({
@@ -75,7 +65,6 @@ export function analyze(params) {
   };
 }
 
-/** Рендер бейджа. */
 export function renderRhythm(rootEls, result) {
   const { badge, label, stats, issuesList } = rootEls;
 
