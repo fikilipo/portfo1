@@ -238,27 +238,11 @@ function product() {
       title: "Фото товара",
       body: "Самый тяжёлый магнит внимания в карточке. Соотношение 4:3 — универсальное для каталогов.",
     }) },
-    (() => {
-      const svgNs = "http://www.w3.org/2000/svg";
-      const s = document.createElementNS(svgNs, "svg");
-      s.setAttribute("viewBox", "0 0 400 300");
-      s.innerHTML = `
-        <defs>
-          <linearGradient id="sh" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0" stop-color="#111"/>
-            <stop offset="1" stop-color="#3a3a3a"/>
-          </linearGradient>
-        </defs>
-        <path d="M40 200 Q 50 160 110 150 L 170 140 Q 210 130 250 150 L 320 170 Q 360 180 365 210 L 365 230 Q 360 245 340 245 L 70 245 Q 45 240 40 220 Z" fill="url(#sh)"/>
-        <path d="M120 170 Q 140 150 175 155 L 230 160 Q 255 160 260 175 L 260 185 Q 255 195 225 190 L 170 185 Q 135 185 125 180 Z" fill="#e7f85a"/>
-        <circle cx="90" cy="220" r="12" fill="#1c1f27"/>
-        <circle cx="90" cy="220" r="4" fill="#e7f85a"/>
-        <circle cx="320" cy="220" r="12" fill="#1c1f27"/>
-        <circle cx="320" cy="220" r="4" fill="#e7f85a"/>
-        <path d="M60 245 L 60 255 L 350 255 L 350 245 Z" fill="#0d0f14"/>
-      `;
-      return s;
-    })()
+    el("img", {
+      src: "./assets/nike-air-max-270.jpg",
+      alt: "Nike Air Max 270 React",
+      loading: "lazy",
+    })
   );
 
   const info = el(
