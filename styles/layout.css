@@ -1,14 +1,9 @@
-/* -------------------------------------------------------------
- * Сетка и Ритм — раскладка (шапка, панели, сцена, футер)
- * ------------------------------------------------------------- */
-
 body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
 }
 
-/* --------- TOPBAR --------- */
 .topbar {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -58,7 +53,6 @@ body {
   justify-content: flex-end;
 }
 
-/* --------- WORKSPACE --------- */
 .workspace {
   display: grid;
   grid-template-columns: 300px 1fr 320px;
@@ -67,7 +61,6 @@ body {
   min-height: 0;
 }
 
-/* --------- PANELS --------- */
 .panel {
   background: var(--paper-2);
   border: 1px solid var(--line);
@@ -106,7 +99,6 @@ body {
   line-height: 1.55;
 }
 
-/* --------- STAGE --------- */
 .stage {
   display: flex;
   flex-direction: column;
@@ -141,7 +133,6 @@ body {
   padding: var(--section-gap) 0;
 }
 
-/* Слои сетки и тепловой карты поверх сцены */
 .stage__grid,
 .stage__heatmap {
   position: absolute;
@@ -179,7 +170,6 @@ body[data-heatmap-visible="true"] .stage__heatmap {
   font-variant-numeric: tabular-nums;
 }
 
-/* Дальтонизм — фильтр применяется только к содержимому сцены */
 body[data-colorblind="protanopia"] .stage__canvas,
 body[data-colorblind="protanopia"] .stage__heatmap {
   filter: url(#protanopia);
@@ -193,7 +183,6 @@ body[data-colorblind="tritanopia"] .stage__heatmap {
   filter: url(#tritanopia);
 }
 
-/* Режим До/После — в правой половине показываем «хаотичный» вариант */
 .stage__compare {
   position: absolute;
   inset: 0;
@@ -234,7 +223,6 @@ body[data-colorblind="tritanopia"] .stage__heatmap {
   left: 10px;
 }
 
-/* Наведение на элемент — подсветка для сетки (highlight-rect) */
 .eye-highlight {
   position: absolute;
   border: 1.5px dashed var(--ink);
@@ -245,7 +233,6 @@ body[data-colorblind="tritanopia"] .stage__heatmap {
   transition: opacity 120ms ease;
 }
 
-/* --------- FOOTER --------- */
 .footer {
   display: flex;
   gap: 10px;
@@ -266,7 +253,6 @@ body[data-colorblind="tritanopia"] .stage__heatmap {
   border-bottom: 1px dashed var(--line-2);
 }
 
-/* --------- RESPONSIVE --------- */
 @media (max-width: 1100px) {
   .workspace {
     grid-template-columns: 260px 1fr 280px;

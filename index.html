@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="./styles/presets.css" />
   </head>
   <body data-preset="landing" data-grid-visible="true" data-heatmap-visible="false" data-compare="false" data-colorblind="none">
-    <!-- SVG‑фильтры дальтонизма + иконки sprite -->
     <svg aria-hidden="true" width="0" height="0" style="position:absolute">
       <defs>
         <filter id="protanopia"><feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0" /></filter>
@@ -56,7 +55,6 @@
     </header>
 
     <main class="workspace">
-      <!-- ЛЕВАЯ ПАНЕЛЬ -->
       <aside class="panel panel--left" aria-label="Параметры сетки">
         <section class="panel__section">
           <h2 class="panel__title">Базовый модуль</h2>
@@ -116,7 +114,7 @@
         </section>
       </aside>
 
-      <!-- ЦЕНТРАЛЬНАЯ СЦЕНА -->
+
       <section class="stage" aria-label="Сцена с пресетом">
         <div class="stage__frame" id="stage-frame">
           <div class="stage__container" id="stage-container">
@@ -134,7 +132,7 @@
         </div>
       </section>
 
-      <!-- ПРАВАЯ ПАНЕЛЬ -->
+
       <aside class="panel panel--right" aria-label="Индикатор ритма и заметки">
         <section class="panel__section">
           <h2 class="panel__title">Ритм</h2>
@@ -158,7 +156,7 @@
         <section class="panel__section panel__section--muted">
           <details class="legend">
             <summary>Легенда тепловой карты</summary>
-            <p>Красный — зона, куда взгляд падает первой. Жёлтый — вторичное внимание. Синий — зоны, которые пользователь, скорее всего, пропустит. Карта строится по&nbsp;F‑паттерну и&nbsp;весам элементов (заголовок&nbsp;= 1.0, CTA&nbsp;= 0.95, изображение&nbsp;= 0.9…).</p>
+            <p>Красный — первичное внимание. Жёлтый — вторичное. Синий — зоны, которые скорее всего пройдут мимо.</p>
           </details>
         </section>
       </aside>
@@ -168,11 +166,8 @@
       <span>Проект «Сетка и&nbsp;Ритм»</span>
       <span class="footer__sep">·</span>
       <span>Vanilla HTML / CSS / JS</span>
-      <span class="footer__sep">·</span>
-      <a href="./TZ.md">ТЗ</a>
     </footer>
 
-    <!-- html2canvas подгружается лениво при первом клике на «Сохранить PNG» -->
     <script type="module" src="./scripts/main.js"></script>
   </body>
 </html>
